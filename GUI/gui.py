@@ -4,51 +4,61 @@ from PIL import Image, ImageTk
 from playsound import playsound
 import os.path
 from functools import partial
+from GMM import recognize
+from GMM import features
 
-
-openedfile = 0
+global selected_model_path
+global model_loaded
+global wav_path
 
 IMAGE_DIR = "images"
 
+
 def browseFiles():
-    global openedfile
-    global file_path
-    file_path = filedialog.askopenfilename(title=u'Choose file')
-    label_file_explorer.configure(text="File Opened: " + file_path)
-    return file_path
+    wav_path = filedialog.askopenfilename(title=u'Choose file')
+    label_file_explorer.configure(text="File Opened: " + wav_path)
+    return wav_path
 
 def play():
-    playsound(file_path)
+    playsound(wav_path)
 
 def Inference(label_prediction):
-    image2 = Image.open(os.path.join(IMAGE_DIR, "AATROX.png"))
+    image2 = Image.open(os.path.join(IMAGE_DIR, "LOL.png"))
     image_res2 = image2.resize((150, 150), Image.ANTIALIAS)
     photo2 = ImageTk.PhotoImage(image_res2)
-    label_prediction.configure(text="Prediction = AATROX")
+    label_prediction.configure(text="Prediction = ?")
     label_image2 = Label(window,
                         image=photo2, height=200)
     label_image2.image = photo2
     label_image2.grid(column=0, row=2, columnspan=3, rowspan=2, pady=(0.0))
 
-def modeltext():
-    filepath = filedialog.askopenfilename(title=u'Choose file')
-    image2 = Image.open(os.path.join(IMAGE_DIR, "gmm.png"))
-    image_res2 = image2.resize((150, 150), Image.ANTIALIAS)
-    photo4 = ImageTk.PhotoImage(image_res2)
-    label_image2 = Label(window,
-                         image=photo4, height=200)
-    label_image2.image = photo4
-    label_image2.grid(column=0, row=2, columnspan=2, rowspan=2, pady=(0.0))
+def ModelSelection():
+    selected_model_path = filedialog.askopenfilename(title=u'Choose file')
+    model_loaded = recognize.load_model(selected_model_path)
+    # image2 = Image.open(os.path.join(IMAGE_DIR, "gmm.png"))
+    # image_res2 = image2.resize((150, 150), Image.ANTIALIAS)
+    # photo4 = ImageTk.PhotoImage(image_res2)
+    # label_image2 = Label(window,
+    #                      image=photo4, height=200)
+    # label_image2.image = photo4
+    # label_image2.grid(column=0, row=2, columnspan=2, rowspan=2, pady=(0.0))
+    
 
 
 
 
 
-def Inference2(label_prediction):
-    image3 = Image.open(os.path.join(IMAGE_DIR, "LUCIAN.png"))
+def PredictFunc(label_prediction, model, path):
+    try:
+        fs, signal = features.read_wav(path)
+    except Exception:
+        label_prediction.configure(text="Read {} failed.".format(path))
+        return
+    pred_res = model.predict(fs, signal)
+    image3 = Image.open(os.path.join(IMAGE_DIR, pred_res, ".png"))
     image_res2 = image3.resize((150, 150), Image.ANTIALIAS)
     photo3 = ImageTk.PhotoImage(image_res2)
-    label_prediction.configure(text="Prediction = LUCIAN")
+    label_prediction.configure(text="Prediction = {}".format(pred_res))
     label_image3 = Label(window,
                         image=photo3, height=150)
     label_image3.image = photo3
@@ -96,10 +106,10 @@ def TKWindow():
     # button_test_command = partial(modeltext, label_prediction)
     button_test = Button(window,
                          text="Model selection",
-                         command=modeltext,
+                         command=ModelSelection,
                          width=18, height=3)
 
-    button_test2_command = partial(Inference2, label_prediction)
+    button_test2_command = partial(PredictFunc, label_prediction, model_loaded, wav_path)
     button_test2 = Button(window,
                           text="Prediction",
                           command=button_test2_command,
