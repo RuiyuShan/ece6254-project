@@ -30,6 +30,8 @@ class Model:
         return self.gmmset.predict(feat)
 
     def dump(self, model_name):
+        self.features.clear()
+        print('Saving model...')
         with open(model_name, 'wb') as f:
             pickle.dump(self, f, -1)
 
