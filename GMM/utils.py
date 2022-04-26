@@ -3,13 +3,17 @@ import shutil
 import os
 
 
-def make_test_data(wavs_dir, test_data_dir, n_file):
+def make_test_data(wavs_dir, test_data_dir, test_percent):
     for dir in Path(wavs_dir).iterdir():
         if not dir.is_dir():
             continue
         label = dir.name.split('/')[-1]
         new_subdir = os.path.join(test_data_dir, label)
         os.mkdir(new_subdir)
+        wav_num = 0
+        for _ in dir.iterdir():
+            wav_num += 1
+        n_file = round(wav_num * test_percent)
         n = 0
         for wav in dir.iterdir():
             if n >= n_file:
@@ -17,11 +21,11 @@ def make_test_data(wavs_dir, test_data_dir, n_file):
             if 'wav' not in wav.suffix:
                 print('file suffix is not wav, suffix: {}', wav.suffix)
                 continue
-            shutil.copy(wav, os.path.join(new_subdir, os.path.basename(wav)))
-            print('copied {} to {}'.format(wav, os.path.join(new_subdir, os.path.basename(wav))))
+            shutil.move(wav, os.path.join(new_subdir, os.path.basename(wav)))
+            print('move {} to {}'.format(wav, os.path.join(new_subdir, os.path.basename(wav))))
             n += 1
 
 if __name__ == '__main__':
-    make_test_data("/Users/shanruiyu/Desktop/ECE6254/ece6254-project/data/wavs",
-                   "/Users/shanruiyu/Desktop/ECE6254/ece6254-project/data/test",
-                   n_file=3)
+    make_test_data("/home/ruiyushan/proj/data/wavs",
+                   "/home/ruiyushan/proj/data/test",
+                   test_percent=0.2)
