@@ -14,7 +14,11 @@ def task_test(model_path, test_files_dir):
             if 'wav' not in wav.suffix:
                 print('file suffix is not wav, suffix: {}', wav.suffix)
                 continue
-            fs, signal = read_wav(wav)
+            try:
+                fs, signal = read_wav(wav)
+            except Exception as e:
+                print(e)
+                continue
             label_pred = model.predict(fs, signal)
             print('predict {} --> {}'.format(wav, label_pred))
             if true_label == label_pred:
