@@ -16,7 +16,7 @@ def task_test(model_path, test_files_dir):
                 continue
             fs, signal = read_wav(wav)
             label_pred = model.predict(fs, signal)
-            print('predict {} --> {}'.format(wav.name, label_pred))
+            print('predict {} --> {}'.format(wav, label_pred))
             if true_label == label_pred:
                 true_num += 1
             else:
