@@ -35,4 +35,5 @@ class Model:
         print('Saving model...')
         with open(model_name, 'wb') as f:
             pickle.dump(self, f, -1)
+        print('dump successfully.')
 

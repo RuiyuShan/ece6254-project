@@ -26,6 +26,7 @@ def train_all(path, output_path, n_component=32):
     """
     m = Model(n_component)
     subdirs = get_subdir(path)
+    n_files = 0
     for dir in subdirs:
         label = dir.name.split('/')[-1]
         wavs = dir.iterdir()
@@ -40,8 +41,10 @@ def train_all(path, output_path, n_component=32):
                 continue
             print("enroll {}".format(wav))
             m.enroll(label, fs, signal)
+            n_files += 1
     m.train()
     m.dump(output_path)
+    print('Trained {} wav files.'.format(n_files))
 
 def predict(model, input_file):
     assert input_file.split('.')[-1] == 'wav'
