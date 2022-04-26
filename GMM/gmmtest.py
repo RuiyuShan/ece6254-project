@@ -16,10 +16,11 @@ def task_test(model_path, test_files_dir):
                 continue
             fs, signal = read_wav(wav)
             label_pred = model.predict(fs, signal)
+            print('predict {} --> {}'.format(wav.name, label_pred))
             if true_label == label_pred:
                 true_num += 1
             else:
                 err_num += 1
             total_mum += 1
-    print("Total test: {}, true num: {}, err num: {}, error rate: %{:.2f}".format(total_mum, true_num, err_num,
+    print("Total test: {}, true num: {}, err num: {}, error rate: {:.2f}%".format(total_mum, true_num, err_num,
                                                                                   (err_num / true_num)))
