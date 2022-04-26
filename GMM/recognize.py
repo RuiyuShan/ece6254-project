@@ -30,9 +30,12 @@ def train_all(path, output_path, n_component=32):
         label = dir.name.split('/')[-1]
         wavs = dir.iterdir()
         for wav in wavs:
+            if 'wav' not in wav.suffix:
+                print("not wav file, skip")
+                continue
+            print("enroll {}".format(wav))
             fs, signal = read_wav(wav)
             m.enroll(label, fs, signal)
-            print("enroll {}".format(wav))
     m.train()
     m.dump(output_path)
 

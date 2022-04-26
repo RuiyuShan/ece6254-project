@@ -12,7 +12,7 @@ def read_wav(path):
     return fs, signal
 
 def get_feature(fs, signal):
-    feature = mfcc(signal, fs, nfft=1103)
+    feature = mfcc(signal, fs, nfft=1200)
     if len(feature) == 0:
         print("ERR: extract mfcc failed. ", file=sys.stderr)
     return feature
