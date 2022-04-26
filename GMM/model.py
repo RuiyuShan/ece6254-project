@@ -18,6 +18,7 @@ class Model:
         for label, feats in self.features.items():
             try:
                 self.gmmset.fit_new(feats, label)
+                print('feat new: {}'.format(label))
             except Exception as e:
                 print("training {} failed".format(label))
                 print(e)
