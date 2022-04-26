@@ -33,8 +33,12 @@ def train_all(path, output_path, n_component=32):
             if 'wav' not in wav.suffix:
                 print("not wav file, skip")
                 continue
+            try:
+                fs, signal = read_wav(wav)
+            except Exception as e:
+                print(e)
+                continue
             print("enroll {}".format(wav))
-            fs, signal = read_wav(wav)
             m.enroll(label, fs, signal)
     m.train()
     m.dump(output_path)
