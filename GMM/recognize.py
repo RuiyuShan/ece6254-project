@@ -1,3 +1,4 @@
+import time
 from pathlib import Path
 from features import *
 import pickle
@@ -24,6 +25,7 @@ def train_all(path, output_path, n_component=32):
     :param n_component: GMM component num.
     :param path: dir which contains hero audio data.
     """
+    time_start = time.time()
     m = Model(n_component)
     subdirs = get_subdir(path)
     n_files = 0
@@ -45,6 +47,8 @@ def train_all(path, output_path, n_component=32):
     m.train()
     m.dump(output_path)
     print('Trained {} wav files.'.format(n_files))
+    time_end = time.time()
+    print("Used {:.2f}s for training.".format(time_end - time_start))
 
 def predict(model, input_file):
     assert input_file.split('.')[-1] == 'wav'

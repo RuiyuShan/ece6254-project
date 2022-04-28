@@ -40,7 +40,6 @@ def ModelSelection(label_model):
     model_list.clear()
     model_list.append(model_loaded)
     label_model.configure(text="Selected model: {}".format(os.path.basename(selected_model_path)))
-    print(wav_path)
     print(selected_model_path)
     
 
@@ -60,6 +59,7 @@ def PredictFunc(label_prediction):
         return
     model_loaded = model_list[0]
     pred_res = model_loaded.predict(fs, signal)
+    print("{} --> {}".format(wav_path, pred_res))
     image3 = Image.open(os.path.join(IMAGE_DIR, pred_res + ".png"))
     image_res2 = image3.resize((150, 200), Image.ANTIALIAS)
     photo3 = ImageTk.PhotoImage(image_res2)
