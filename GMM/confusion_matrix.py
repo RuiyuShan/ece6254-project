@@ -8,3 +8,4 @@ if __name__ == '__main__':
         dic = pickle.load(handle)
 
     generate_confusion_table(dic, "05020551")
+    print('success')
