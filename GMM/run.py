@@ -18,7 +18,7 @@ def get_args():
                        help='Task to do. Either "enroll" or "predict"',
                        required=True)
 
-    parser.add_argument('-o', '--output', help='Set output model dir', default='../models')
+    parser.add_argument('-o', '--output', help='Set output model dir', default='../../models_6273')
 
 
     parser.add_argument('-i', '--input',
