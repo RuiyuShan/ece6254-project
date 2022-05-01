@@ -26,6 +26,6 @@ def make_test_data(wavs_dir, test_data_dir, test_percent):
             n += 1
 
 if __name__ == '__main__':
-    make_test_data("/home/ruiyushan/proj/data/wavs",
-                   "/home/ruiyushan/proj/data/test",
+    make_test_data("/home/ruiyushan/proj/data_6273/wavs",
+                   "/home/ruiyushan/proj/data_6273/test",
                    test_percent=0.2)
