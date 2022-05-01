@@ -32,7 +32,11 @@ def task_test(model_path, test_files_dir):
                 continue
             label_pred = model.predict(fs, signal)
             print('predict {} --> {}'.format(wav, label_pred))
-            confusion_table[true_label][label_pred] += 1
+            try:
+                confusion_table[true_label][label_pred] += 1
+            except Exception as e:
+                print(e)
+                print("true: {}, pred: {}".format(true_label, label_pred))
             if true_label == label_pred:
                 true_num += 1
             else:
@@ -53,4 +57,4 @@ def generate_confusion_table(dic, now_time):
     df_cfm = pd.DataFrame.from_dict(dic)
     plt.figure()
     cfm_plot = sn.heatmap(df_cfm, annot=True)
-    cfm_plot.figure.savefig("cfm_{}.png".format(now_time))
+    cfm_plot.figure.savefig("../data_6273/cfm_{}.png".format(now_time))
