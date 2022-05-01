@@ -57,4 +57,4 @@ def generate_confusion_table(dic, now_time):
     df_cfm = pd.DataFrame.from_dict(dic)
     plt.figure()
     cfm_plot = sn.heatmap(df_cfm, annot=True)
-    cfm_plot.figure.savefig("../data_6273/cfm_{}.png".format(now_time))
+    cfm_plot.figure.savefig("../../data_6273/cfm_{}.png".format(now_time))
