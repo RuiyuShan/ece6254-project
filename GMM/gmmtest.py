@@ -44,7 +44,7 @@ def task_test(model_path, test_files_dir):
             total_mum += 1
     now_time = time.strftime("%m%d%H%M", time.localtime())
 
-    with open('confusion_table_{}.pickle'.format(now_time), 'wb') as handle:
+    with open('../../data_6273/confusion_table_{}.pickle'.format(now_time), 'wb') as handle:
         pickle.dump(confusion_table, handle, protocol=pickle.HIGHEST_PROTOCOL)
     generate_confusion_table(confusion_table, now_time)
     print("Total test: {}, true num: {}, err num: {}, error rate: {:.2f}%".format(total_mum, true_num, err_num,
