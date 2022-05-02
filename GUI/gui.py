@@ -10,7 +10,7 @@ from GMM import features
 wav_path = ''
 model_list = []
 
-IMAGE_DIR = "images"
+IMAGE_DIR = "images_6273"
 
 
 def BrowseFile():
@@ -20,10 +20,10 @@ def BrowseFile():
     label_file_explorer.configure(text="File Opened: " + str.join('/', wav_path.split('/')[-2:]))
     print(os.path.join(IMAGE_DIR, wav_path.split('/')[-2] + '.png'))
     image = Image.open(os.path.join(IMAGE_DIR, wav_path.split('/')[-2] + '.png'))
-    image_resize = image.resize((150, 200), Image.ANTIALIAS)
+    image_resize = image.resize((150, 230), Image.ANTIALIAS)
     photo1 = ImageTk.PhotoImage(image_resize)
     label_image_left = Label(window,
-                        image=photo1, height=200)
+                        image=photo1, height=230)
     # label_image_left.configure(image=photo1)
     label_image_left.image = photo1
     label_image_left.grid(column=0, row=3, columnspan=2, rowspan=2, pady=(0.0))
@@ -61,11 +61,11 @@ def PredictFunc(label_prediction):
     pred_res = model_loaded.predict(fs, signal)
     print("{} --> {}".format(wav_path, pred_res))
     image3 = Image.open(os.path.join(IMAGE_DIR, pred_res + ".png"))
-    image_res2 = image3.resize((150, 200), Image.ANTIALIAS)
+    image_res2 = image3.resize((150, 230), Image.ANTIALIAS)
     photo3 = ImageTk.PhotoImage(image_res2)
     label_prediction.configure(text="Prediction = {}".format(pred_res))
     label_image3 = Label(window,
-                        image=photo3, height=200)
+                        image=photo3, height=230)
     label_image3.image = photo3
     label_image3.grid(column=1, row=3, columnspan=2, rowspan=2, pady=(0.0))
 
@@ -73,24 +73,24 @@ def TKWindow():
     global label_file_explorer
     window = Tk()
 
-    window.title('League of Legends Character Audio Recognition Based on Gaussian Mixture Model')
+    window.title('Overwatch Hero Audio Recognition Based on Gaussian Mixture Model')
     window.resizable(width=False, height=False)
     window.geometry("750x600")
 
 
 
-    image_left = Image.open(os.path.join(IMAGE_DIR, "LOL.png"))
-    image_left_resized = image_left.resize((150, 200), Image.ANTIALIAS)
+    image_left = Image.open(os.path.join(IMAGE_DIR, "overwatch.png"))
+    image_left_resized = image_left.resize((150, 230), Image.ANTIALIAS)
     photo_left = ImageTk.PhotoImage(image_left_resized)
     label_image_left = Label(window,
-                        image=photo_left, height=200)
+                        image=photo_left, height=230)
     label_image_left.image = photo_left
 
-    image_right = Image.open(os.path.join(IMAGE_DIR, "LOL.png"))
-    image_right_resized = image_right.resize((150, 200), Image.ANTIALIAS)
+    image_right = Image.open(os.path.join(IMAGE_DIR, "overwatch.png"))
+    image_right_resized = image_right.resize((150, 230), Image.ANTIALIAS)
     photo_right = ImageTk.PhotoImage(image_right_resized)
     label_image_right = Label(window,
-                             image=photo_right, height=200)
+                             image=photo_right, height=230)
     label_image_right.image = photo_right
 
     canva=Label(window,

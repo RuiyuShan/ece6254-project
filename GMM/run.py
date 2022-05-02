@@ -8,7 +8,6 @@ from gmmtest import *
 
 
 def get_args():
-    # desc = "6254 Project - League of Legends hero audio recognition"
     desc = "6273 project - Overwatch hero audio recognition"
 
     parser = argparse.ArgumentParser(description=desc,
