@@ -1,6 +1,7 @@
 import pickle
 
 from recognize import *
+from confusion_matrix import generate_confusion_table
 
 
 def task_test(model_path, test_files_dir):
@@ -46,23 +47,8 @@ def task_test(model_path, test_files_dir):
 
     with open('../../data_6254/confusion_table_{}.pickle'.format(now_time), 'wb') as handle:
         pickle.dump(confusion_table, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    generate_confusion_table(confusion_table, now_time)
+    generate_confusion_table(confusion_table, now_time, "../../data_6254/cfm_{}.png")
     print("Total test: {}, true num: {}, err num: {}, error rate: {:.2f}%".format(total_mum, true_num, err_num,
                                                                                   (err_num * 100 / true_num)))
 
-def generate_confusion_table(dic, now_time):
-    import pandas as pd
-    import seaborn as sn
-    import matplotlib.pyplot as plt
-    dic_percent = {}
-    for true_label, sub_dic in dic.items():
-        dic_percent[true_label] = {}
-        total = sum(dic[true_label].values())
-        for label_pred, val in sub_dic.items():
-            dic_percent[true_label][label_pred] = val * 100 / total
-    df_cfm = pd.DataFrame.from_dict(dic_percent)
-    plt.figure(figsize=(30, 20))
-    cfm_plot = sn.heatmap(df_cfm, cmap='Blues', annot=True, fmt='g', cbar_kws={'format': '%.4f%%'})
-    cfm_plot.set_xlabel('Label True')
-    cfm_plot.set_ylabel('Label Pred')
-    cfm_plot.figure.savefig("../../data_6254/cfm_{}.png".format(now_time))
+
