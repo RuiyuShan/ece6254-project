@@ -54,7 +54,15 @@ def generate_confusion_table(dic, now_time):
     import pandas as pd
     import seaborn as sn
     import matplotlib.pyplot as plt
+    dic_percent = {}
+    for true_label, sub_dic in dic.items():
+        dic_percent[true_label] = {}
+        total = sum(dic[true_label].values())
+        for label_pred, val in sub_dic.items():
+            dic_percent[true_label][label_pred] = val * 100 / total
     df_cfm = pd.DataFrame.from_dict(dic)
     plt.figure(figsize=(30, 20))
-    cfm_plot = sn.heatmap(df_cfm, cmap='Blues', annot=True, fmt='g')
-    cfm_plot.figure.savefig("../../data_6273/cfm_{}.png".format(now_time))
+    cfm_plot = sn.heatmap(df_cfm, cmap='Blues', annot=True, fmt='g', cbar_kws={'format': '%.4f%%'})
+    cfm_plot.set_xlabel('Label True')
+    cfm_plot.set_ylabel('Label Pred')
+    cfm_plot.figure.savefig("../../data_6254/cfm_{}.png".format(now_time))
