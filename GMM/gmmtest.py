@@ -60,7 +60,7 @@ def generate_confusion_table(dic, now_time):
         total = sum(dic[true_label].values())
         for label_pred, val in sub_dic.items():
             dic_percent[true_label][label_pred] = val * 100 / total
-    df_cfm = pd.DataFrame.from_dict(dic)
+    df_cfm = pd.DataFrame.from_dict(dic_percent)
     plt.figure(figsize=(30, 20))
     cfm_plot = sn.heatmap(df_cfm, cmap='Blues', annot=True, fmt='g', cbar_kws={'format': '%.4f%%'})
     cfm_plot.set_xlabel('Label True')
