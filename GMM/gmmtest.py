@@ -48,7 +48,7 @@ def task_test(model_path, test_files_dir):
         pickle.dump(confusion_table, handle, protocol=pickle.HIGHEST_PROTOCOL)
     generate_confusion_table(confusion_table, now_time)
     print("Total test: {}, true num: {}, err num: {}, error rate: {:.2f}%".format(total_mum, true_num, err_num,
-                                                                                  (err_num / true_num)))
+                                                                                  (err_num * 100 / true_num)))
 
 def generate_confusion_table(dic, now_time):
     import pandas as pd
